@@ -1,5 +1,8 @@
 # Команда **"Тонущий корабль"**
 
+![Python test](https://github.com/Gadzet005/Predprof_2023/actions/workflows/python.yml/badge.svg)
+![Django test](https://github.com/Gadzet005/Predprof_2023/actions/workflows/django.yml/badge.svg)
+
 ## Инструкция по установке
 - Загрузите проект
   ```
