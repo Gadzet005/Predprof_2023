@@ -1,0 +1,5 @@
+{% extends 'base_form.html' %}
+
+{% block end_form %}
+<a class="btn btn-primary" href="{% url 'users:reset_password' %}">Забыли пароль?</a>
+{% endblock end_form %}

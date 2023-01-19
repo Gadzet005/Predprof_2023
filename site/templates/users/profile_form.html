@@ -1,0 +1,17 @@
+{% extends 'base_form.html' %}
+{% load static %}
+
+{% block begin_form %}
+<div class="text-center">
+    {% if form.instance.avatar %}
+    <img src="{{ form.instance.avatar.url }}" alt="Аватарка" class="rounded-circle" style="width: 150px;">
+    {% else %}
+    <img src="{% static 'users/no_avatar.png' %}" alt="Аватарка" class="rounded-circle" style="width: 150px;">
+    {% endif %}
+</div>
+{% endblock begin_form %}
+
+{% block end_form %}
+<a class="btn btn-primary" href="{% url 'users:change_password' %}">Изменить пароль</a>
+<a class="btn btn-success" href="{{ request.user.get_absolute_url }}">Мой профиль для других</a>
+{% endblock end_form %}

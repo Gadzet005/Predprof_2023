@@ -1,0 +1,32 @@
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom px-5 navbar-dark bg-dark">
+    <a href="{% url 'common:home' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+    <p class="fs-4 text-white">Тонущий корабль</p>
+    </a>
+
+    <ul class="nav nav-pills">
+        {% for elem in menu %}
+
+        <li class="nav-item dropdown">
+        {% if elem.sub_elems %}
+            {% if elem.is_active %}
+            <p class="nav-link dropdown-toggle active text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ elem.title }}</p>
+            {% else %}
+            <p class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ elem.title }}</p>
+            {% endif %}
+            <ul class="dropdown-menu">
+                {% for sub_elem in elem.sub_elems %}
+                <li><a class="dropdown-item" href="{% url sub_elem.url_name %}">{{ sub_elem.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {% if elem.is_active %}
+            <p class="nav-link active text-white">{{ elem.title }}</p>
+            {% else %}
+            <a href="{% url elem.url_name %}" class="nav-link text-white">{{ elem.title }}</a>
+            {% endif %}
+        {% endif %}
+        </li>
+
+        {% endfor %}
+    </ul>
+</header>
