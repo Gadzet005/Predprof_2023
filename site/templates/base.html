@@ -9,7 +9,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% if page_title %}{{ page_title|capfirst }}{% else %}Страница{% endif %}</title>
+    <title>
+        {% block page_title %}
+        {% if page_title %}
+        {{ page_title|capfirst }}
+        {% else %}
+        Страница
+        {% endif %}
+        {% endblock page_title %}
+    </title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'bootstrap-5/css/bootstrap.min.css' %}">
@@ -20,7 +28,7 @@
     {% block extrahead %}{% endblock extrahead %}
 </head>
 
-<body class="bg-light">
+<body style="background-color: #eee;">
 
 <!-- Главное меню -->
 {% block main_menu %}
@@ -40,7 +48,7 @@
 </div>
 {% endif %}
 
-<main class="container min-vh-100">
+<main class="container min-vh-100" style="font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;">
     {% block content %}
     Пусто...
     {% endblock content %}
@@ -49,4 +57,5 @@
 {% include 'footer.html' %}
 
 </body>
+
 </html>

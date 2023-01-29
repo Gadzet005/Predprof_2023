@@ -17,9 +17,6 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'username', 'password')}),
         (
-            'Информация', {'fields': ('birthday_date', 'avatar')}
-        ),
-        (
             'Права и разрешения', {
                 'fields': (
                     'is_active', 'is_staff', 'is_superuser', 'groups',

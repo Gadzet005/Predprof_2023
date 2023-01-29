@@ -1,0 +1,39 @@
+{% load static %}
+
+<div class="row justify-content-center mb-3">
+    <div class="col-md-12 col-xl-10">
+      <div class="card shadow-0 border rounded-3">
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+              <div class="bg-image hover-zoom ripple rounded ripple-surface text-center">
+                {% if site.logo %}
+                <img src="{{ site.logo.url }}" class="img-thumbnail border-0" />
+                {% else %}
+                <img src="{% static 'catalog/img/default.png' %}" class="img-thumbnail border-0" />
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-6 col-xl-6">
+                <div class="text-center">
+                    <a class="text-decoration-none text-dark fs-3" href="{{ site.url }}">{{ site.name }}</a>
+                </div>
+                <p class="text-muted fs-6">Оценка: 5</p>
+                <p class="text-muted fs-6">{{ site.description|truncatechars:150 }}</p>
+            </div>
+            
+            <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                <h4>Статус <span class="badge bg-success rounded-pill">Работает</span></h4>
+                <h4>Пинг <span class="badge bg-info rounded-pill">63 мс</span></h4>
+                <div class="d-flex flex-column mt-4">
+                    <a class="btn btn-primary btn-sm" type="button" href="{% url 'catalog:detail' site.pk %}">Подробнее</a>
+                </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
