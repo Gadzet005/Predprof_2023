@@ -15,7 +15,7 @@
 </div>
 
 <div class="">
-<ul class="pagination pagination-lg justify-content-center">
+<ul class="pagination pagination justify-content-center">
     {% if page_obj.has_previous %}
         <li class="page-item">
             <a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">В начало</a>
@@ -31,7 +31,7 @@
             <p class="page-link"  tabindex="-1" aria-disabled="true"><span aria-hidden="true">&laquo;</span></p>
         </li>
     {% endif %}
-    <li class="page-item disabled"><p style="font-size: 2;" class="page-link">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</p></li>
+    <li class="page-item disabled"><p style="font-size: 2;" class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</p></li>
     {% if page_obj.has_next %}
         <li class="page-item">
             <a class="page-link" href="?page={{ page_obj.next_page_number }}"><span aria-hidden="true">&raquo;</span></a>
