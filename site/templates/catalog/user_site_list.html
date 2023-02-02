@@ -1,0 +1,7 @@
+{% extends 'catalog/site_list.html' %}
+
+{% block catalog_top %}
+<div class="text-center mb-5">
+    <a class="btn btn-lg btn-success" href="{% url 'catalog:create' %}">Добавить сервис</a>
+</div>
+{% endblock catalog_top %}

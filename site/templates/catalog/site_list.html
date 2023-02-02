@@ -9,12 +9,21 @@
 
 {% block content %}
 <div class="py-5">
+    {% block catalog_top %}
+    {% endblock catalog_top %}
+
     {% for site in sites %}
+    
+    {% block site_card %}
     {% include "catalog/site_card.html" %}
+    {% endblock site_card %}
+
     {% endfor %}
+
 </div>
 
-<div class="">
+{% if sites %}
+<div>
 <ul class="pagination pagination justify-content-center">
     {% if page_obj.has_previous %}
         <li class="page-item">
@@ -49,4 +58,7 @@
     {% endif %}
 </ul>
 </div>
+{% else %}
+<h1 class="text-center">Каталог пуст...</h1>
+{% endif %}
 {% endblock content %}

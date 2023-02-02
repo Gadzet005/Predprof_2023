@@ -28,7 +28,7 @@
                 <h4>Статус <span class="badge bg-success rounded-pill">Работает</span></h4>
                 <h4>Пинг <span class="badge bg-info rounded-pill">63 мс</span></h4>
                 <div class="d-flex flex-column mt-4">
-                    <a class="btn btn-primary btn-sm" type="button" href="{% url 'catalog:detail' site.pk %}">Подробнее</a>
+                    <a class="btn btn-primary btn-sm" type="button" href="{{ site.get_absolute_url }}">Подробнее</a>
                 </div>
             </div>
 
