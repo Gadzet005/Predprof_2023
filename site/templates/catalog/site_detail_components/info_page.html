@@ -1,0 +1,20 @@
+{% load static %}
+
+<div class="row align-items-start">
+    <div class="text-center col-lg-3 col-sm-12">
+        <a class="text-decoration-none" href="{{ site.url }}">
+            <img class="img-thumbnail border-0" 
+            src={% if site.logo %}"{{ site.logo.url }}"{% else %}"{% static 'catalog/img/default.png' %}"{% endif %} 
+            alt="картинка">
+        </a>
+    </div>
+    <div class="col-lg-9 col-sm-12 ps-lg-5">
+        <div class="text-center">
+            <a class="text-decoration-none text-dark fs-3" href="{{ site.url }}">{{ site.name }}</a>
+        </div>
+        <h4>Оценка</h4>
+        <p>10/10</p>
+        <h4>Описание</h4>
+        <p class="text-muted fs-6">{{ site.description }}</p>
+    </div>
+</div>
