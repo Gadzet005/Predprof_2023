@@ -13,5 +13,5 @@ class SiteManager(models.Manager):
     def get_for_main_catalog(self):
         return self.get_queryset().filter(is_on_catalog=True)
 
-    def get_for_user_catalog(self, user):
+    def get_user_sites(self, user):
         return self.get_queryset().filter(user_site__user=user)

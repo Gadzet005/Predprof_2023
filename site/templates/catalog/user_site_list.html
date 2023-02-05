@@ -5,3 +5,7 @@
     <a class="btn btn-lg btn-success" href="{% url 'catalog:create' %}">Добавить сервис</a>
 </div>
 {% endblock catalog_top %}
+
+{% block site_card %}
+{% include 'catalog/user_site_card.html' %}
+{% endblock site_card %}

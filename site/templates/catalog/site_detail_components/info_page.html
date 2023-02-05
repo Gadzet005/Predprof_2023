@@ -12,8 +12,10 @@
         <div class="text-center">
             <a class="text-decoration-none text-dark fs-3" href="{{ site.url }}">{{ site.name }}</a>
         </div>
+        {% if site.is_on_main_catalog %}
         <h4>Оценка</h4>
         <p>10/10</p>
+        {% endif %}
         <h4>Описание</h4>
         <p class="text-muted fs-6">{{ site.description }}</p>
     </div>
