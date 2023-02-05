@@ -9,13 +9,30 @@
         </a>
     </div>
     <div class="col-lg-9 col-sm-12 ps-lg-5">
-        <div class="text-center">
-            <a class="text-decoration-none text-dark fs-3" href="{{ site.url }}">{{ site.name }}</a>
+        <div class="d-flex justify-content-center w-100 mb-2">
+            <div class='mx-auto lh-1'>
+              <a class="text-decoration-none text-dark fs-3 text-break" href="{{ site.url }}">{{ site.name }}</a>
+            </div>
+
+            {% if site.is_on_catalog %}
+            <div>
+                {% if site.rating_num > 0 %}
+                <div class="d-flex align-items-center lh-1">
+                    <span class="text-muted fs-4">{{ site.rating_avg|floatformat:2 }}</span>
+                    <img class="mx-1" src="{% static 'catalog/img/star.png' %}" alt="" width="20" height="20">
+                    <span class="text-muted fs-6 ms-2">{{ site.rating_num }}</span>
+                </div>
+                {% else %}
+                <div>
+                    <span class="text-muted fs-6">Нет оценок</span>
+                </div>
+                {% endif %}
+
+                <a class="btn btn-sm btn-outline-success mt-2" href="{% url 'rating:create' site.pk %}">Оценить</a>
+            </div>
+            {% endif %}
         </div>
-        {% if site.is_on_main_catalog %}
-        <h4>Оценка</h4>
-        <p>10/10</p>
-        {% endif %}
+
         <h4>Описание</h4>
         <p class="text-muted fs-6">{{ site.description }}</p>
     </div>

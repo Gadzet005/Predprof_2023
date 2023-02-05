@@ -9,6 +9,7 @@ urlpatterns = [
     path('', include('common.urls')),
     path('users/', include('users.urls')),
     path('catalog/', include('catalog.urls')),
+    path('catalog/', include('rating.urls')),
 ]
 
 if settings.DEBUG:
