@@ -17,19 +17,37 @@
             </div>
 
             <div class="col-md-6 col-lg-6 col-xl-6">
-                <div class="text-center">
-                    <a class="text-decoration-none text-dark fs-3" href="{{ site.url }}">{{ site.name }}</a>
+              <div class="d-flex justify-content-center w-100 mb-2">
+                    <div class='me-auto lh-1'>
+                      <a class="text-decoration-none text-dark fs-3 text-break" href="{{ site.url }}">{{ site.name }}</a>
+                    </div>
+
+                    {% block rating %}
+
+                    {% if site.rating_num > 0 %}
+                    <div>
+                      <div class="d-flex align-items-center lh-1">
+                        <span class="text-muted fs-4">{{ site.rating_avg|floatformat:2 }}</span>
+                        <img class="mx-1" src="{% static 'catalog/img/star.png' %}" alt="" width="20" height="20">
+                        <span class="text-muted fs-6 ms-2">{{ site.rating_num }}</span>
+                      </div>
+                    </div>
+                    {% endif %}
+
+                    {% endblock rating %}
                 </div>
-                <p class="text-muted fs-6">Оценка: 5</p>
-                <p class="text-muted fs-6">{{ site.description|truncatechars:150 }}</p>
+
+                <p class="text-muted fs-6">{{ site.description|truncatechars:200 }}</p>
             </div>
             
             <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
                 <h4>Статус <span class="badge bg-success rounded-pill">Работает</span></h4>
                 <h4>Пинг <span class="badge bg-info rounded-pill">63 мс</span></h4>
                 <div class="d-flex flex-column mt-4">
-                    <a class="btn btn-primary btn-sm" type="button" href="{% url 'catalog:detail' site.pk %}">Подробнее</a>
+                    <a class="btn btn-primary btn-sm" type="button" href="{{ site.get_absolute_url }}">Подробнее</a>
                 </div>
+                {% block extrabuttons %}
+                {% endblock extrabuttons %}
             </div>
 
           </div>
