@@ -19,6 +19,7 @@ class SiteRating(models.Model):
     user = models.ForeignKey(User, verbose_name='пользователь', on_delete=models.CASCADE)
     rating = models.SmallIntegerField('оценка', choices=RATING_CHOICES)
     feedback = models.TextField('отзыв', max_length=5000, null=True, blank=True)
+    creation_date = models.DateField('дата создания', auto_now_add=True)
 
     objects = RatingManager()
 

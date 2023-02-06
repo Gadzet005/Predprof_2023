@@ -20,7 +20,8 @@ class SiteManager(models.Manager):
                 .filter(Q(user_site__user=user) | Q(is_on_catalog=True))
                 )
         else:
-            queryset = self.get_queryset().filter(is_on_catalog=True)
+            queryset = self.get_queryset().filter(is_on_catalog=True).annotate()
+
         return self.annotate_rating(queryset)
 
     def get_for_main_catalog(self):

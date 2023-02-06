@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 
 from catalog.models import Site, UserSite
 from catalog.forms import CreateUserSiteForm, UpdateUserSiteForm
+from rating.models import SiteRating
 
 
 class SiteListView(ListView):
@@ -42,6 +43,15 @@ class SiteDetailView(DetailView):
 
     def get_queryset(self):
         return Site.objects.enabled(self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        rating_obj = SiteRating.objects.get_user_rating(
+            self.object, self.request.user
+            )
+        context['user_rating'] = rating_obj.rating if rating_obj else None
+        context['feedbacks'] = SiteRating.objects.get_site_feedbacks(self.object)
+        return context
 
 
 class UpdateUserSiteView(LoginRequiredMixin, UpdateView):

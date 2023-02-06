@@ -9,15 +9,15 @@
         </a>
     </div>
     <div class="col-lg-9 col-sm-12 ps-lg-5">
-        <div class="d-flex justify-content-center w-100 mb-2">
-            <div class='mx-auto lh-1'>
+        <div class="d-flex justify-content-center w-100 my-2">
+            <div class='d-flex align-items-center mx-auto lh-1'>
               <a class="text-decoration-none text-dark fs-3 text-break" href="{{ site.url }}">{{ site.name }}</a>
             </div>
 
             {% if site.is_on_catalog %}
-            <div>
+            <div class="d-flex flex-column">
                 {% if site.rating_num > 0 %}
-                <div class="d-flex align-items-center lh-1">
+                <div class="d-flex align-items-center lh-1 mx-auto">
                     <span class="text-muted fs-4">{{ site.rating_avg|floatformat:2 }}</span>
                     <img class="mx-1" src="{% static 'catalog/img/star.png' %}" alt="" width="20" height="20">
                     <span class="text-muted fs-6 ms-2">{{ site.rating_num }}</span>
@@ -27,8 +27,16 @@
                     <span class="text-muted fs-6">Нет оценок</span>
                 </div>
                 {% endif %}
-
+                
+                {% if user_rating %}
+                <div class="d-flex align-items-center lh-1">
+                    <span class="text-muted">Ваша оценка: {{ user_rating }}</span>
+                    <img class="mx-1" src="{% static 'catalog/img/star.png' %}" alt="" width="20" height="20">
+                </div>
+                <a class="btn btn-sm btn-outline-success mt-2" href="{% url 'rating:update' site.pk %}">Изменить оценку</a>
+                {% else %}
                 <a class="btn btn-sm btn-outline-success mt-2" href="{% url 'rating:create' site.pk %}">Оценить</a>
+                {% endif %}
             </div>
             {% endif %}
         </div>
