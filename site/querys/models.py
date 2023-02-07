@@ -1,12 +1,12 @@
 from django.db import models
+from catalog.models import Site
 
-
-class Urls(models.Model):
-    url = models.TextField()
-    status_code = models.IntegerField()
-    ping = models.TimeField()
-    time = models.DateTimeField()
+class Site_statistics(models.Model):
+    id_site = models.ForeignKey(Site, verbose_name='id сайта' , on_delete=models.DO_NOTHING, null=True)
+    status_code = models.IntegerField(verbose_name='статус код')
+    ping = models.TimeField(verbose_name='задержка запроса сайта')
+    note_time = models.DateTimeField(verbose_name='время записи', null=True)
 
     def __str__(self):
-        return 'id query: ' + str(url)
+        return 'id сайта: '+ str(id_site)
     

@@ -32,6 +32,8 @@ LOCAL_APPS = [
     'core.apps.CoreConfig',
     'common.apps.CommonConfig',
     'users.apps.UsersConfig',
+    'catalog.apps.CatalogConfig',
+    'querys.apps.QuerysConfig'
 ]
 INSTALLED_APPS = DJANGO_APPS + MODULE_APPS + LOCAL_APPS
 

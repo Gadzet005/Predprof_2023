@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, UpdateView
 import django.contrib.auth.views as AuthViews
 from django.urls.base import reverse_lazy
 from django.contrib.auth import login
@@ -110,16 +110,6 @@ class PasswordResetConfirmView(AuthViews.PasswordResetConfirmView):
             extra_tags='alert-success'
             )
         return result
-
-
-class UserDetailView(DetailView):
-    template_name = 'users/user_details.html'
-    queryset = User.objects.actived()
-    pk_url_kwarg = 'user_id'
-    context_object_name = 'user'
-    extra_context = {
-        'page_title': 'Профиль'
-    }
 
 
 class UserProfileView(LoginRequiredMixin, UpdateView):
