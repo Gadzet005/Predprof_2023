@@ -8,5 +8,5 @@ class Site_statistics(models.Model):
     note_time = models.DateTimeField(verbose_name='время записи', null=True)
 
     def __str__(self):
-        return 'id сайта: '+ str(id_site)
+        return 'id сайта: ' + str(id_site)
     
