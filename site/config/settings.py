@@ -13,6 +13,8 @@ environ.Env.read_env()
 SECRET_KEY = env.str('SECRET_KEY', default='Unsafe secret key')
 DEBUG = env.bool('DEBUG', default=True)
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
+EMAIL_HOST_USER = env.str('EMAIL_USER', default='email@email.ru')
+EMAIL_HOST_PASSWORD = env.str('EMAIL_PASSWORD', default='email@email.ru')
 
 INTERNAL_IPS = ['127.0.0.1']
 
