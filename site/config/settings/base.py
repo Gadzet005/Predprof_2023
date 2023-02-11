@@ -5,14 +5,12 @@ from django.urls import reverse_lazy
 import environ
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 env = environ.Env()
-environ.Env.read_env()
-
-SECRET_KEY = env.str('SECRET_KEY', default='Unsafe secret key')
-DEBUG = env.bool('DEBUG', default=True)
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
+environ.Env.read_env(BASE_DIR.parent / '.env')
+SECRET_KEY = env.str('SECRET_KEY')
+DEBUG = True
+ALLOWED_HOSTS = env.str('ALOWED_HOSTS', default=['*'])
 
 INTERNAL_IPS = ['127.0.0.1']
 
@@ -32,6 +30,8 @@ LOCAL_APPS = [
     'core.apps.CoreConfig',
     'common.apps.CommonConfig',
     'users.apps.UsersConfig',
+    'catalog.apps.CatalogConfig',
+    'queries.apps.QueriesConfig'
 ]
 INSTALLED_APPS = DJANGO_APPS + MODULE_APPS + LOCAL_APPS
 
@@ -100,6 +100,7 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
+STATIC_ROOT='/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]

@@ -32,12 +32,4 @@ class ResetUserPasswordConfirmForm(
 class UpdateUserProfileForm(forms.ModelForm, FormStyleMixin):
     class Meta:
         model = User
-        fields = ('username', 'email', 'birthday_date', 'avatar')
-
-        widgets = {
-            'avatar': forms.FileInput(),
-            'birthday_date': forms.TextInput(attrs={'type': 'date'})
-        }
-        labels = {
-            'avatar': 'Изменить аватарку'
-        }
+        fields = ('username', 'email')

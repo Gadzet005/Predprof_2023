@@ -1,32 +1,37 @@
-<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom px-5 navbar-dark bg-dark">
-    <a href="{% url 'common:home' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-    <p class="fs-4 text-white">Тонущий корабль</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-2 px-3 px-lg-5 mb-4">
+    <a href="{% url 'common:home' %}" class="navbar-brand fs-3">
+    Тонущий корабль
     </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
+            aria-controls="navbarContent" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <ul class="nav nav-pills">
-        {% for elem in menu %}
-
-        <li class="nav-item dropdown">
-        {% if elem.sub_elems %}
-            {% if elem.is_active %}
-            <p class="nav-link dropdown-toggle active text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ elem.title }}</p>
+    <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navbarContent">
+        <ul class="nav navbar-nav nav-pills ms-auto me-3 fs-5">
+            {% for elem in menu %}
+            <li class="nav-item dropdown mx-2">
+            {% if elem.sub_elems %}
+                {% if elem.is_active %}
+                <a class="nav-link dropdown-toggle active text-white px-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ elem.title }}</a>
+                {% else %}
+                <a class="nav-link dropdown-toggle text-white px-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ elem.title }}</a>
+                {% endif %}
+                <ul class="dropdown-menu">
+                    {% for sub_elem in elem.sub_elems %}
+                    <li><a class="dropdown-item" href="{% url sub_elem.url_name %}">{{ sub_elem.title }}</a></li>
+                    {% endfor %}
+                </ul>
             {% else %}
-            <p class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ elem.title }}</p>
+                {% if elem.is_active %}
+                <a class="nav-link active text-white px-2">{{ elem.title }}</a>
+                {% else %}
+                <a href="{% url elem.url_name %}" class="nav-link text-white px-2">{{ elem.title }}</a>
+                {% endif %}
             {% endif %}
-            <ul class="dropdown-menu">
-                {% for sub_elem in elem.sub_elems %}
-                <li><a class="dropdown-item" href="{% url sub_elem.url_name %}">{{ sub_elem.title }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            {% if elem.is_active %}
-            <p class="nav-link active text-white">{{ elem.title }}</p>
-            {% else %}
-            <a href="{% url elem.url_name %}" class="nav-link text-white">{{ elem.title }}</a>
-            {% endif %}
-        {% endif %}
-        </li>
+            </li>
 
-        {% endfor %}
-    </ul>
-</header>
+            {% endfor %}
+        </ul>
+    </div>  
+</nav>

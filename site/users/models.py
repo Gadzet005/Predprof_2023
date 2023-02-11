@@ -4,8 +4,6 @@ from django.core.mail import send_mail
 from django.db import models
 from django.urls import reverse
 
-from users.validators import birthday_date_validator
-
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -47,10 +45,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField('почта', unique=True)
 
     username = models.CharField('имя пользователя', max_length=50)
-    birthday_date = models.DateField(
-        'день рождения', null=True, blank=True,
-        validators=[birthday_date_validator]
-        )
 
     is_staff = models.BooleanField(
         'статус персонала', default=False,
@@ -59,10 +53,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField('активен', default=True)
 
     date_joined = models.DateTimeField('дата регистрации', auto_now_add=True)
-
-    avatar = models.ImageField(
-        'аватарка', upload_to='avatars/%Y/%m', null=True, blank=True
-        )
 
     objects = UserManager()
 

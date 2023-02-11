@@ -1,6 +1,17 @@
 version: '3.7'
 
 services:
+  db:
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=Predprof
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+
   django_gunicorn:
     volumes:
       - static:/static
@@ -10,6 +21,9 @@ services:
       context: .
     ports:
       - "8000:8000"
+    depends_on:
+      - db
+
   nginx:
     build: ./nginx
     volumes:
