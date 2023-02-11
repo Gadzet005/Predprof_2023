@@ -8,7 +8,7 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 env = environ.Env()
 environ.Env.read_env(BASE_DIR.parent / '.env')
-SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = env.str('SECRET_KEY', default='not secret')
 DEBUG = True
 ALLOWED_HOSTS = env.str('ALOWED_HOSTS', default=['*'])
 
