@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, F
 
 
 class SiteManager(models.Manager):
@@ -31,7 +31,7 @@ class SiteManager(models.Manager):
         )
         return (
             self.annotate_rating(base_queryset)
-            .order_by('-rating_num', '-rating_avg', '-id')
+            .order_by(F('rating_num') * F('rating_avg')).reverse()
             )
 
     def get_user_sites(self, user):

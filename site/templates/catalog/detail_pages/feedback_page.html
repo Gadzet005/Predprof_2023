@@ -1,6 +1,10 @@
 {% load static %}
 
 <div class="container">
+{% if feedbacks %}
+<h4 class="text-center mb-5 mb-lg-0">Отзывов оставлено: {{ feedbacks.count }}</h4>
+{% endif %}
+
 {% for feedback in feedbacks %}
 <div class="my-2">
     <div class="d-flex flex-row">
