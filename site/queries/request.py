@@ -26,6 +26,7 @@ def pings(urls):
             url = i[7:]
         else:
             url = i[8:]
+        arr.append(mping(url))
     return arr
 
 
@@ -46,23 +47,23 @@ def get_urls():
     if len(sites) == 0:
         return None
     urls = []
+    url_id = []
     for site in sites:
         urls.append(site.url)
-    return urls
+        url_id.append(site)
+    return urls, url_id
 
 
-def bd(arr):
-    for i in arr:
+def bd(arr, urls_id):
+    for i in range(len(arr)):
         note = Site_statistics()
-        create_note(note, int(i[1].status_code), i[0])
+        create_note(note, int(arr[i][1].status_code), arr[i][0], id_site=urls_id[i])
 
 
-def create_note(note, status_code, ping, url=None):
+def create_note(note, status_code, ping, id_site=0, url=None):
     note.status_code = status_code
+    note.id_site = id_site
     note.ping = ping
     note.note_time = timezone.now()
     note.save()
 
-
-if __name__ == '__main__':
-    print(pings(['https://google.com']))
