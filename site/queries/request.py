@@ -13,6 +13,7 @@ import datetime
 from django.utils import timezone
 
 
+
 def request_list(urls):
     objects = (grequests.get(u) for u in urls)
     objects = grequests.map(objects)
@@ -65,6 +66,10 @@ python manage.py makemigrations
 python manage.py migrate
 
 """
+def bd(arr):
+    for i in arr:
+        note = Site_statistics()
+        create_note(note, i[1], i[0])
 
 
 def create_note(note, status_code, ping, url=None):
@@ -72,3 +77,4 @@ def create_note(note, status_code, ping, url=None):
     note.ping = ping
     note.note_time = timezone.now()
     note.save()
+
