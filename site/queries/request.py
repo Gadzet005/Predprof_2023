@@ -40,6 +40,7 @@ def url_to_status(urls):
         status_list.append(arr)
     return status_list
 
+
 def get_urls():
     sites = list(Site.objects.all())
     if len(sites) == 0:
@@ -48,6 +49,7 @@ def get_urls():
     for site in sites:
         urls.append(site.url)
     return urls
+
 
 def bd(arr):
     for i in arr:
@@ -60,5 +62,7 @@ def create_note(note, status_code, ping, url=None):
     note.ping = ping
     note.note_time = timezone.now()
     note.save()
+
+
 if __name__ == '__main__':
     print(pings(['https://google.com']))
