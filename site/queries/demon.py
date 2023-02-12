@@ -1,21 +1,13 @@
-# from .models import Urls
-import datetime
-from django.utils import timezone
+from queries.request import bd, url_to_status, get_urls
 from time import sleep
-from request import request_list
+from django.utils import timezone
 
-print('demon working')
 
-urls = [
-    'http://www.heroku.com',
-    'http://tablib.org',
-    'http://httpbin.org',
-    'http://python-requests.org',
-    'http://kennethreitz.com'
-]
-
-while True:
-    links = request_list(urls)
-    for link in links:
-        print(link)
-    sleep(60)
+def demon():
+    while True:
+        urls = get_urls()
+        urls = url_to_status(urls)
+        if urls != None:
+            bd(urls)
+            print('log time:', timezone.now())
+        sleep(60)

@@ -1,17 +1,9 @@
-
-import imp
-import re
-from tabnanny import verbose
-import grequests
 import socket
-
 from pythonping import ping
-
-
 import grequests
-import datetime
 from django.utils import timezone
-
+from queries.models import Site_statistics
+from catalog.models import Site
 
 
 def request_list(urls):
@@ -20,7 +12,7 @@ def request_list(urls):
     return objects
 
 
-def mpnig(url):
+def mping(url):
     r = ping(socket.gethostbyname(url))
     if r.rtt_avg_ms >= 2000:
         return "Fall"
@@ -34,11 +26,10 @@ def pings(urls):
             url = i[7:]
         else:
             url = i[8:]
-        arr.append(mpnig(url))
     return arr
 
 
-def merger(urls):
+def url_to_status(urls):
     reqs = request_list(urls)
     lpings = pings(urls)
     status_list = []
@@ -49,27 +40,19 @@ def merger(urls):
         status_list.append(arr)
     return status_list
 
+def get_urls():
+    sites = list(Site.objects.all())
+    if len(sites) == 0:
+        return None
+    urls = []
+    for site in sites:
+        urls.append(site.url)
+    return urls
 
-"""
-create_note функция для создания записи в бд
-первый аргумент это экземпляр класса бд
-пример:
-from querys.models import Site_statistics
-
-
-note = Site_statistics()
-create_note(note, 200, 20)
-
-url пока нет т.к надо ещё связующий функционал пилить
-незабудь перед любым изминением и первым использованием бд
-python manage.py makemigrations
-python manage.py migrate
-
-"""
 def bd(arr):
     for i in arr:
         note = Site_statistics()
-        create_note(note, i[1], i[0])
+        create_note(note, int(i[1].status_code), i[0])
 
 
 def create_note(note, status_code, ping, url=None):
@@ -77,4 +60,5 @@ def create_note(note, status_code, ping, url=None):
     note.ping = ping
     note.note_time = timezone.now()
     note.save()
-
+if __name__ == '__main__':
+    print(pings(['https://google.com']))
