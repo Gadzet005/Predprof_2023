@@ -1,13 +1,15 @@
-from queries.request import bd, url_to_status, get_urls
+from queries.request import save_notes, get_sites_info
 from time import sleep
 from django.utils import timezone
+
+from catalog.models import Site
 
 
 def demon():
     while True:
-        urls, urls_id = get_urls()
-        urls = url_to_status(urls)
-        if urls is not None:
-            bd(urls, urls_id)
-            print('log time:', timezone.now())
+        sites = Site.objects.all()
+        sites = get_sites_info(sites)
+        save_notes(sites)
+
+        print('log time:', timezone.now())
         sleep(60)
