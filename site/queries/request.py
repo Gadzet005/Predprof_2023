@@ -1,9 +1,10 @@
 import socket
-from pythonping import ping
+
 import grequests
-from django.utils import timezone
-from queries.models import Site_statistics
+from pythonping import ping
+
 from catalog.models import Site
+from queries.models import SiteQueryNote
 
 
 def request_list(urls):
@@ -56,14 +57,7 @@ def get_urls():
 
 def bd(arr, urls_id):
     for i in range(len(arr)):
-        note = Site_statistics()
-        create_note(note, int(arr[i][1].status_code), arr[i][0], id_site=urls_id[i])
-
-
-def create_note(note, status_code, ping, id_site=0, url=None):
-    note.status_code = status_code
-    note.id_site = id_site
-    note.ping = ping
-    note.note_time = timezone.now()
-    note.save()
-
+        SiteQueryNote.objects.create(
+            site=urls_id[i], status_code=int(arr[i][1].status_code),
+            ping=arr[i][0]
+            )
