@@ -7,39 +7,42 @@ from pythonping import ping
 from queries.models import SiteQueryNote
 
 
-def get_sites_status_code(sites):
-    requests = (grequests.get(site.url) for site in sites)
-    responses = grequests.map(requests)
-    for idx, site in enumerate(sites):
-        site.status_code = responses[idx].status_code
-    return sites
+class SiteQueryManager(object):
+    def __init__(self, sites):
+        self.sites = sites
 
+    def _get_status_code(self):
+        requests = (grequests.get(site.url) for site in self.sites)
+        responses = grequests.map(requests)
 
-def get_site_ping_by_domen(domen):
-    r = ping(socket.gethostbyname(domen))
-    if r.rtt_avg_ms >= 2000:
-        return 'Fall'
-    return r.rtt_avg_ms
+        for idx, site in enumerate(self.sites):
+            site.status_code = responses[idx].status_code
 
-
-def get_sites_ping(sites):
-    def _get_sites_ping():
-        for site in sites:
+    def _get_ping(self):
+        for site in self.sites:
             domen_match = re.search(r'https?://([A-Za-z_0-9.-]+).*', site.url)
             if domen_match:
                 domen = domen_match.group(1)
-                site.ping = get_site_ping_by_domen(domen)
-                yield site
+                site.ping = self.get_ping(domen)
+            else:
+                site.ping = None
 
-    return list(_get_sites_ping())
+    def get_sites_info(self):
+        self._get_status_code()
+        self._get_ping()
 
+        return self.sites
 
-def get_sites_info(sites):
-    sites = get_sites_status_code(sites)
-    sites = get_sites_ping(sites)
-    return sites
+    def save(self):
+        for site in self.sites:
+            if site.ping:
+                SiteQueryNote.objects.create(
+                    site=site, status_code=site.status_code, ping=site.ping
+                    )
 
-
-def save_notes(sites):
-    for site in sites:
-        SiteQueryNote.objects.create(site=site, status_code=site.status_code, ping=site.ping)
+    @staticmethod
+    def get_ping(domen):
+        r = ping(socket.gethostbyname(domen))
+        if r.rtt_avg_ms >= 2000:
+            return 'Fall'
+        return r.rtt_avg_ms
