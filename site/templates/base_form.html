@@ -54,7 +54,7 @@
             {% endblock end_form %}
         </div>
 
-        <button type="submit" class="btn btn-primary">{{ button_text }}</button>
+        <button type="submit" class="btn btn-primary">{% if button_text %}{{ button_text }}{% else %}Сохранить{% endif %}</button>
     </form>
 
 </div>
