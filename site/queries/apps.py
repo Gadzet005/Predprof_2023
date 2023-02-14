@@ -10,4 +10,4 @@ class QueriesConfig(AppConfig):
 
     def ready(self):
         from queries.tasks import demon_task
-        #demon_task.apply_async()
+        demon_task.apply_async()
