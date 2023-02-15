@@ -5,14 +5,12 @@ from django.urls import reverse_lazy
 import environ
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 env = environ.Env()
 environ.Env.read_env()
-
-SECRET_KEY = env.str('SECRET_KEY', default='Unsafe secret key')
-DEBUG = env.bool('DEBUG', default=True)
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
+SECRET_KEY = env.str('SECRET_KEY', default='not secret')
+DEBUG = True
+ALLOWED_HOSTS = env.str('ALOWED_HOSTS', default=['*'])
 
 INTERNAL_IPS = ['127.0.0.1']
 
@@ -33,6 +31,7 @@ LOCAL_APPS = [
     'common.apps.CommonConfig',
     'users.apps.UsersConfig',
     'catalog.apps.CatalogConfig',
+    'queries.apps.QueriesConfig',
     'rating.apps.RatingConfig',
 ]
 INSTALLED_APPS = DJANGO_APPS + MODULE_APPS + LOCAL_APPS
