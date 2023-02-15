@@ -1,21 +1,20 @@
-# from .models import Urls
-import datetime
-from django.utils import timezone
+from queries.request import SiteQueryManager
 from time import sleep
-from request import request_list
+from datetime import datetime
+from catalog.models import Site
 
-print('demon working')
 
-urls = [
-    'http://www.heroku.com',
-    'http://tablib.org',
-    'http://httpbin.org',
-    'http://python-requests.org',
-    'http://kennethreitz.com'
-]
+def demon():
+    start_time = datetime.now()
+    print("START PROCESS")
 
-while True:
-    links = request_list(urls)
-    for link in links:
-        print(link)
-    sleep(60)
+    sites = Site.objects.all()
+    manager = SiteQueryManager(sites)
+    sites = manager.get_sites_info()
+    for site in sites:
+        print(site.name, site.url, site.status_code, site.ping, sep='\t')
+    manager.save()
+
+    finish_time = datetime.now()
+    print("FINISH PROCESS")
+    print('DURATION:', finish_time - start_time)
