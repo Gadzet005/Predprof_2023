@@ -21,14 +21,14 @@ async def task(site_name, cur_code, recipients_list):
     if cur_code < 400:
         for recipient in recipients_list:
             chat_id = User.objects.get(email=recipient).chat_id
-            text = f'Ресурс {site_name} сейчас доступен'
-            r = get(f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={text}')
+            message = f'Ресурс {site_name} сейчас доступен'
+            r = get(f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}')
 
     else:
         for recipient in recipients_list:
             chat_id = User.objects.get(email=recipient).chat_id
-            text = f'Ресурс {site_name} сейчас не доступен'
-            r = get(f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={text}')
+            message = f'Ресурс {site_name} сейчас не доступен'
+            r = get(f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}')
 
 
 async def start(update, context) -> int:
