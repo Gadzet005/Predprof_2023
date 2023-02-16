@@ -9,22 +9,21 @@
 <script>
   const ctx = document.getElementById('myChart');
 
+  const data = [
+    {% for note in site.query_notes.reverse %}
+    { year: {{ forloop.counter }}, count: {{ note.ping|floatformat:0 }} },
+    {% endfor %}
+  ];
+
   new Chart(ctx, {
     type: 'line',
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: data.map(row => row.year),
       datasets: [{
-        label: '# of Votes',
-        data: [12, 190, 33, 5, 2, 122],
+        label: 'Пинг за последние 24 часа',
+        data: data.map(row => row.count),
         borderWidth: 1,
       }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
     }
   });
 </script>
