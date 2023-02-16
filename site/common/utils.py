@@ -1,7 +1,6 @@
 from django.core.mail import send_mass_mail
 from requests import get
 
-import site
 from users.models import User
 from config.settings import EMAIL_HOST_USER, TELEGRAM_TOKEN
 

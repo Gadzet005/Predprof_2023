@@ -1,3 +1,4 @@
+from asgiref.sync import sync_to_async
 from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
 from telegram.ext import (
@@ -11,11 +12,11 @@ from telegram.ext import (
 import os
 
 from users.models import User
+from config.settings import TELEGRAM_TOKEN as TOKEN
 
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
-        TOKEN = os.environ['TELEGRAM_TOKEN']
         LOGIN, PASSWORD, = 1, 2
 
         async def start(update, context) -> int:
@@ -24,7 +25,7 @@ class Command(BaseCommand):
                 "Для того чтобы подписаться на оповещения об изменении статуса отслеживаемых Вам сайтов, "
                 "Вам нужно авторизоваться.",
             )
-            update.message.reply_text(
+            await update.message.reply_text(
                 "Введите Ваш логин:",
             )
 
@@ -38,28 +39,34 @@ class Command(BaseCommand):
 
             return PASSWORD
 
+        @sync_to_async
+        def get_user(login):
+            return User.objects.get(email=login)
+
         async def get_password_and_summarize(update, context) -> int:
             context.user_data['password'] = update.message.text
             try:
-                user = User.objects.get(email=context.user_data['login'])
+                user = await get_user(context.user_data['login'])
             except ObjectDoesNotExist:
-                update.message.reply_text(
+                await update.message.reply_text(
                     "Неверный логин или пароль. Повторите попытку заново.",
                 )
-                update.message.reply_text(
+                await update.message.reply_text(
                     "Введите Ваш логин:",
                 )
                 return LOGIN
             if user.check_password(context.user_data['password']):
-                update.message.reply_text(
+                await update.message.reply_text(
                     "Авторизация завершена. Оповещения включены",
                 )
                 user.chat_id = update.message.chat.id
+                await sync_to_async(user.save)()
+                print((await get_user(context.user_data['login'])).chat_id, 1, update.message.chat.id)
             else:
-                update.message.reply_text(
+                await update.message.reply_text(
                     "Неверный логин или пароль. Повторите попытку заново.",
                 )
-                update.message.reply_text(
+                await update.message.reply_text(
                     "Введите Ваш логин:",
                 )
                 return LOGIN
@@ -84,7 +91,7 @@ class Command(BaseCommand):
                     "Отписаться не получилось: Вы еще не авторизовались.",
                 )
 
-        application = Application.builder().token("TOKEN").build()
+        application = Application.builder().token(TOKEN).build()
 
         conv_handler = ConversationHandler(
             entry_points=[CommandHandler("start", start)],
@@ -98,4 +105,4 @@ class Command(BaseCommand):
         application.add_handler(conv_handler)
 
         application.add_handler(CommandHandler("unsubscribe", unsubscribe))
-        application.start_polling()
+        application.run_polling()
