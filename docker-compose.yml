@@ -11,6 +11,8 @@ services:
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=password
       - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - dbdata:/var/lib/mysql
 
   django_gunicorn:
     volumes:
@@ -21,8 +23,44 @@ services:
       context: .
     ports:
       - "8000:8000"
+    command: sh /entrypoint.sh
     depends_on:
       - db
+
+  redis:
+    image: redis:alpine
+    expose:
+      - "6379"
+
+  celelry:
+    volumes:
+      - static:/static
+    env_file:
+      - .env
+    build:
+      context: .
+    command: sh /worker_entrypoint.sh
+
+    depends_on:
+      - django_gunicorn
+      - db
+      - redis
+      - nginx
+
+  celelry-beat:
+    volumes:
+      - static:/static
+    env_file:
+      - .env
+    build:
+      context: .
+    command: sh /beat_entrypoint.sh
+
+    depends_on:
+      - django_gunicorn
+      - db
+      - redis
+      - nginx
 
   nginx:
     build: ./nginx
@@ -35,4 +73,5 @@ services:
 
 volumes:
   static:
+  dbdata:
 

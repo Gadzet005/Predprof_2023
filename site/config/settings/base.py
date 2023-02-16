@@ -117,8 +117,8 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = reverse_lazy('users:login')
 LOGIN_REDIRECT_URL = reverse_lazy('common:home')
 
-REDIS_HOST = 'localhost'
-REDIS_PORT = '6379'
+REDIS_HOST = env.str('REDIS_HOST', default='localhost')
+REDIS_PORT = env.str('REDIS_PORT', default='6379')
 CELERY_BROKER_URL= 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
 CELERY_ACCEPT_CONTENT = ['application/json']

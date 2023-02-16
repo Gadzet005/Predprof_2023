@@ -7,5 +7,6 @@ RUN pip install -r requirements.txt
 RUN apk del python3-dev mariadb-dev build-base
 COPY ./site /app
 WORKDIR /app
-COPY ./entrypoint.sh /
-ENTRYPOINT ["sh", "/entrypoint.sh"]
+COPY ./entrypoints/entrypoint.sh /
+COPY ./entrypoints/worker_entrypoint.sh /
+COPY ./entrypoints/beat_entrypoint.sh /
