@@ -6,5 +6,5 @@ from reports.views import ReportView
 app_name = 'reports'
 
 urlpatterns = [
-    path('report/', ReportView.as_view(), name='report'),
+    path('create/<int:site_id>/', ReportView.as_view(), name='create'),
 ]

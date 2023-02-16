@@ -72,7 +72,7 @@ class ChangePasswordView(LoginRequiredMixin, AuthViews.PasswordChangeView):
 class ResetPasswordView(AuthViews.PasswordResetView):
     template_name = 'base_form.html'
     email_template_name = 'users/reset_password_email.html'
-    from_email = settings.OWNER_EMAIL
+    from_email = settings.EMAIL_HOST_USER
     form_class = forms.ResetUserPasswordForm
     model = User
     success_url = reverse_lazy('common:home')
