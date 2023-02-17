@@ -19,7 +19,7 @@ def state_change_send_email(site_name, cur_code, recipients_list):
     send_mass_mail(emails, fail_silently=False)
 
 
-async def task(site_name, cur_code, recipients_list):
+def state_change_send_telegram_notification(site_name, cur_code, recipients_list):
     if cur_code < 400:
         message = f'Ресурс {site_name} сейчас доступен'
         for recipient in recipients_list:
