@@ -8,9 +8,10 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 env = environ.Env()
 environ.Env.read_env()
+
 SECRET_KEY = env.str('SECRET_KEY', default='not secret')
 DEBUG = True
-ALLOWED_HOSTS = env.str('ALOWED_HOSTS', default=['*'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 
 INTERNAL_IPS = ['127.0.0.1']
 
@@ -32,7 +33,9 @@ LOCAL_APPS = [
     'common.apps.CommonConfig',
     'users.apps.UsersConfig',
     'catalog.apps.CatalogConfig',
-    'queries.apps.QueriesConfig'
+    'queries.apps.QueriesConfig',
+    'rating.apps.RatingConfig',
+    'reports.apps.ReportsConfig',
 ]
 INSTALLED_APPS = DJANGO_APPS + MODULE_APPS + LOCAL_APPS
 
@@ -110,7 +113,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / 'emails'
-OWNER_EMAIL = env.str('OWNER_EMAIL', default='default@gmail.com')
+EMAIL_HOST_USER = env.str('EMAIL_USER', default='email@email.ru')
+EMAIL_HOST_PASSWORD = env.str('EMAIL_PASSWORD', default='password')
+
+TELEGRAM_TOKEN = env.str('TELEGRAM_TOKEN', default='TOKEN')
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = reverse_lazy('users:login')

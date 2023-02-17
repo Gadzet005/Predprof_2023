@@ -23,9 +23,7 @@ class ResetUserPasswordForm(UserForms.PasswordResetForm, FormStyleMixin):
     pass
 
 
-class ResetUserPasswordConfirmForm(
-    UserForms.AdminPasswordChangeForm, FormStyleMixin
-):
+class ResetUserPasswordConfirmForm(UserForms.AdminPasswordChangeForm, FormStyleMixin):
     pass
 
 

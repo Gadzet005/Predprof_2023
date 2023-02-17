@@ -26,9 +26,10 @@ class MenuElem:
 
 main_menu = [
     MenuElem('На главную', 'common:home'),
-    MenuElem('Каталог', 'catalog:list'),
+    MenuElem('Популярные сервисы', 'catalog:list'),
     MenuElem('Аккаунт', can_see=[UserGroup.Auth], sub_elems=(
         MenuElem('Профиль', 'users:profile'),
+        MenuElem('Мои сервисы', 'catalog:user_list'),
         MenuElem('Выйти', 'users:logout'),
     )),
     MenuElem('Авторизация', can_see=[UserGroup.NotAuth], sub_elems=(
