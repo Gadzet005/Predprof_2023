@@ -24,11 +24,13 @@ async def task(site_name, cur_code, recipients_list):
         message = f'Ресурс {site_name} сейчас доступен'
         for recipient in recipients_list:
             chat_id = User.objects.get(email=recipient).chat_id
-            _ = get(f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage?chat_id={chat_id}&text={message}')
+            if chat_id != 0:
+                _ = get(f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage?chat_id={chat_id}&text={message}')
 
     else:
         message = f'Ресурс {site_name} сейчас не доступен'
         for recipient in recipients_list:
             chat_id = User.objects.get(email=recipient).chat_id
-            _ = get(f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage?chat_id={chat_id}&text={message}')
+            if chat_id != 0:
+                _ = get(f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage?chat_id={chat_id}&text={message}')
 

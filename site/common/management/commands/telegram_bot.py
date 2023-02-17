@@ -40,13 +40,16 @@ class Command(BaseCommand):
             return PASSWORD
 
         @sync_to_async
-        def get_user(login):
-            return User.objects.get(email=login)
+        def get_user(login='', chat_id=0):
+            if login:
+                return User.objects.get(email=login)
+            else:
+                return User.objects.get(chat_id=chat_id)
 
         async def get_password_and_summarize(update, context) -> int:
             context.user_data['password'] = update.message.text
             try:
-                user = await get_user(context.user_data['login'])
+                user = await get_user(login=context.user_data['login'])
             except ObjectDoesNotExist:
                 await update.message.reply_text(
                     "Неверный логин или пароль. Повторите попытку заново.",
@@ -61,7 +64,6 @@ class Command(BaseCommand):
                 )
                 user.chat_id = update.message.chat.id
                 await sync_to_async(user.save)()
-                print((await get_user(context.user_data['login'])).chat_id, 1, update.message.chat.id)
             else:
                 await update.message.reply_text(
                     "Неверный логин или пароль. Повторите попытку заново.",
@@ -81,13 +83,14 @@ class Command(BaseCommand):
 
         async def unsubscribe(update, context):
             try:
-                user = User.objects.get(chat_id=update.message.chat.id)
-                user.chat_id = ''
-                update.message.reply_text(
+                user = await get_user(chat_id=update.message.chat.id)
+                user.chat_id = 0
+                await sync_to_async(user.save)()
+                await update.message.reply_text(
                     "Вы успешно отписались.",
                 )
             except ObjectDoesNotExist:
-                update.message.reply_text(
+                await update.message.reply_text(
                     "Отписаться не получилось: Вы еще не авторизовались.",
                 )
 

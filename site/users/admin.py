@@ -6,7 +6,7 @@ from users.models import User
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    readonly_fields = ('date_joined', 'last_login')
+    readonly_fields = ('date_joined', 'last_login', 'chat_id')
     list_display = (
         'username', 'email', 'is_staff', 'is_superuser'
         )
@@ -15,7 +15,7 @@ class UserAdmin(BaseUserAdmin):
     list_display_links = ('username',)
 
     fieldsets = (
-        (None, {'fields': ('email', 'username', 'password')}),
+        (None, {'fields': ('email', 'username', 'password', 'chat_id')}),
         (
             'Права и разрешения', {
                 'fields': (
