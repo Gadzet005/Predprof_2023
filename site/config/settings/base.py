@@ -7,7 +7,7 @@ import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 env = environ.Env()
-environ.Env.read_env()
+environ.Env.read_env(BASE_DIR.parent / '.env')
 
 SECRET_KEY = env.str('SECRET_KEY', default='not secret')
 DEBUG = True
@@ -26,6 +26,7 @@ DJANGO_APPS = [
 MODULE_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'debug_toolbar',
+    'django_celery_beat',
 ]
 LOCAL_APPS = [
     'core.apps.CoreConfig',
@@ -103,8 +104,9 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    BASE_DIR / 'static_dev'
 ]
 
 MEDIA_URL = '/media/'
@@ -120,3 +122,12 @@ TELEGRAM_TOKEN = env.str('TELEGRAM_TOKEN', default='TOKEN')
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = reverse_lazy('users:login')
 LOGIN_REDIRECT_URL = reverse_lazy('common:home')
+
+REDIS_HOST = env.str('REDIS_HOST', default='localhost')
+REDIS_PORT = env.str('REDIS_PORT', default='6379')
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
