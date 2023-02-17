@@ -16,11 +16,13 @@
                 Статистика
             </button>
         </li>
+        {% if site.is_on_catalog %}
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="pills-reviews-tab" data-bs-toggle="pill" data-bs-target="#pills-reviews" type="button" role="tab" aria-controls="pills-reviews" aria-selected="false">
                 Отзывы
             </button>
         </li>
+        {% endif %}
     </ul>
 </div>
 
@@ -31,9 +33,11 @@
     <div class="tab-pane fade" id="pills-stats" role="tabpanel" aria-labelledby="pills-stats-tab">
         2
     </div>
+    {% if site.is_on_catalog %}
     <div class="tab-pane fade" id="pills-reviews" role="tabpanel" aria-labelledby="pills-reviews-tab">
-        3
+        {% include 'catalog/site_detail_components/feedback_page.html' %}
     </div>
+    {% endif %}
 </div>
 
 </div>

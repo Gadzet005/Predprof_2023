@@ -1,0 +1,12 @@
+{% extends 'catalog/site_card.html' %}
+
+{% block rating %}{% endblock rating %}
+
+{% block extrabuttons %}
+<div class="d-flex flex-column mt-1">
+    <a class="btn btn-outline-success btn-sm" type="button" href="{% url 'catalog:update' site.pk %}">Изменить</a>
+</div>
+<div class="d-flex flex-column mt-1">
+    <a class="btn btn-outline-danger btn-sm" type="button" href="{% url 'catalog:delete' site.pk %}">Удалить</a>
+</div>
+{% endblock extrabuttons %}

@@ -1,6 +1,4 @@
-from .base import BASE_DIR
 import environ
-
 
 env = environ.Env()
 environ.Env.read_env(BASE_DIR.parent / '.env')
