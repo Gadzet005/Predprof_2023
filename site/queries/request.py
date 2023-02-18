@@ -19,7 +19,7 @@ class SiteQueryManager(object):
             try:
                 site.status_code = responses[idx].status_code
             except AttributeError:
-                site.status_code = 404
+                site.status_code = None
 
     def _get_ping(self):
         for site in self.sites:
@@ -38,7 +38,7 @@ class SiteQueryManager(object):
 
     def save(self):
         for site in self.sites:
-            if site.ping:
+            if site.ping and site.status_code:
                 SiteQueryNote.objects.create(
                     site=site, status_code=site.status_code, ping=site.ping
                     )
@@ -50,5 +50,5 @@ class SiteQueryManager(object):
             if r.rtt_avg_ms >= 2000:
                 return None
             return r.rtt_avg_ms
-        except:
+        except Exception:
             return None

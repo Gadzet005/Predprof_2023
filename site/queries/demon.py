@@ -1,5 +1,4 @@
 from queries.request import SiteQueryManager
-from time import sleep
 from datetime import datetime
 
 from catalog.models import Site
@@ -19,4 +18,3 @@ def demon():
     finish_time = datetime.now()
     print("FINISH PROCESS")
     print('DURATION:', finish_time - start_time)
-
