@@ -11,7 +11,9 @@
 
   const data = [
     {% for note in site.query_notes.reverse %}
+    {% if note.ping %}
     { year: {{ forloop.counter }}, count: {{ note.ping|floatformat:0 }} },
+    {% endif %}
     {% endfor %}
   ];
 

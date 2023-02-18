@@ -51,8 +51,13 @@
                 <h5>Статус <span class="badge bg-danger rounded-pill">Не работает. Код {{ site_status.status_code }}</span></h5>
                 {% endif %}
 
+                {% if site_status.ping %}
                 <h5>Пинг <span class="badge bg-info rounded-pill">{{ site_status.ping|floatformat:2 }} мс</span></h5>
+                {% endif %}
+                {% if site.avg_ping %}
                 <h5 class="mb-2">Средний пинг <span class="badge bg-info rounded-pill">{{ site.avg_ping|floatformat:2 }} мс</span></h5>
+                {% endif %}
+                
                 {% endif %}
 
                 <div class="d-flex flex-column">
