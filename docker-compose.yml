@@ -3,8 +3,8 @@ version: '3.7'
 services:
   db:
     image: mysql:8
-    ports:
-      - "3306:3306"
+    expose:
+      - 3306
     environment:
       - MYSQL_ROOT_HOST=%
       - MYSQL_DATABASE=Predprof
@@ -21,8 +21,8 @@ services:
       - .env
     build:
       context: .
-    ports:
-      - "8000:8000"
+    expose: 
+      - 8000
     command: sh /entrypoint.sh
     depends_on:
       - db

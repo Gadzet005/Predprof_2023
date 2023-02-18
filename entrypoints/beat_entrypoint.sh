@@ -4,3 +4,4 @@ while ! nc -z db 3306 ; do
 done
 
 celery -A config beat -l info
+
