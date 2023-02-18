@@ -12,7 +12,7 @@
     <div class="col-lg-9 col-sm-12 ps-lg-5">
         <div class="row w-100 my-2 mx-auto">
             <div class='col-md-auto col-12 d-flex align-items-center mx-auto lh-1'>
-              <a class="text-decoration-none text-dark fs-3 text-break mx-auto text-center" href="{{ site.url }}">{{ site.name|truncatechars:40 }}</a>
+              <a class="text-decoration-none text-dark fs-1 text-break mx-auto text-center" href="{{ site.url }}">{{ site.name|truncatechars:40 }}</a>
             </div>
 
             {% if site.is_on_catalog %}
@@ -26,7 +26,7 @@
     
                     <div class="col-auto">
                         {% if site.rating_num > 0 %}
-                        <div class="d-flex align-items-center lh-1 mx-auto">
+                        <div class="d-flex align-items-center justify-content-center lh-1">
                             <span class="text-muted fs-4">{{ site.rating_avg|floatformat:2 }}</span>
                             <img class="mx-1" src="{% static 'catalog/img/star.png' %}" alt="" width="15" height="15">
                             <span class="text-muted fs-6 ms-2">{{ site.rating_num }}</span>
@@ -64,8 +64,6 @@
 
         <h4>Пинг <span class="badge bg-info rounded-pill">{{ site_status.ping|floatformat:2 }} мс</span></h4>
         <h4>Средний пинг <span class="badge bg-info rounded-pill">{{ site.avg_ping|floatformat:2 }} мс</span></h4>
-        {% else %}
-        <h4>Нет информации</h4>
         {% endif %}
 
         <h4>Описание</h4>

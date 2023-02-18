@@ -52,12 +52,10 @@
                 {% endif %}
 
                 <h5>Пинг <span class="badge bg-info rounded-pill">{{ site_status.ping|floatformat:2 }} мс</span></h5>
-                <h5>Средний пинг <span class="badge bg-info rounded-pill">{{ site.avg_ping|floatformat:2 }} мс</span></h5>
-                {% else %}
-                <h5>Нет информации</h5>
+                <h5 class="mb-2">Средний пинг <span class="badge bg-info rounded-pill">{{ site.avg_ping|floatformat:2 }} мс</span></h5>
                 {% endif %}
 
-                <div class="d-flex flex-column mt-4">
+                <div class="d-flex flex-column">
                     <a class="btn btn-primary btn-sm" type="button" href="{{ site.get_absolute_url }}">Подробнее</a>
                 </div>
                 {% block extrabuttons %}
