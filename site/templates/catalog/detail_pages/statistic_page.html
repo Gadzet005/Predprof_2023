@@ -1,31 +1,11 @@
 {% load static %}
+{% load common %}
+
+<div style="display: none" id="jsonData" data-json="{% site_query_notes_to_json site %}"></div>
 
 <div>
     <canvas id="myChart"></canvas>
 </div>
   
 <script src="{% static 'chart.js/dist/chart.umd.js' %}"></script>
-
-<script>
-  const ctx = document.getElementById('myChart');
-
-  const data = [
-    {% for note in site.query_notes.reverse %}
-    {% if note.ping %}
-    { year: {{ forloop.counter }}, count: {{ note.ping|floatformat:0 }} },
-    {% endif %}
-    {% endfor %}
-  ];
-
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: data.map(row => row.year),
-      datasets: [{
-        label: 'Пинг за последние 24 часа',
-        data: data.map(row => row.count),
-        borderWidth: 1,
-      }]
-    }
-  });
-</script>
+<script src="{% static 'catalog/js/ping_chart.js' %}"></script>
