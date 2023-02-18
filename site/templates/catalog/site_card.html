@@ -1,4 +1,5 @@
 {% load static %}
+{% load common %}
 
 <div class="row justify-content-center mb-3">
     <div class="col-md-12 col-xl-10">
@@ -9,7 +10,7 @@
             <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
               <div class="bg-image hover-zoom ripple rounded ripple-surface text-center">
                 <a class="text-decoration-none" href="{{ site.url }}">
-                  <img class="img-thumbnail border-0" 
+                  <img class="img-thumbnail border-0 w-50 h-50"
                   src={% if site.logo %}"{{ site.logo.url }}"{% else %}"{% static 'catalog/img/default.png' %}"{% endif %} 
                   alt="картинка">
                 </a>
@@ -41,9 +42,25 @@
             </div>
             
             <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
-                <h4>Статус <span class="badge bg-success rounded-pill">Работает</span></h4>
-                <h4>Пинг <span class="badge bg-info rounded-pill">63 мс</span></h4>
-                <div class="d-flex flex-column mt-4">
+                {% get_site_status site as site_status %}
+                {% if site_status %}
+
+                {% if site_status.status_code < 400 %}
+                <h5>Статус <span class="badge bg-success rounded-pill">Работает. Код {{ site_status.status_code }}</span></h5>
+                {% else %}
+                <h5>Статус <span class="badge bg-danger rounded-pill">Не работает. Код {{ site_status.status_code }}</span></h5>
+                {% endif %}
+
+                {% if site_status.ping %}
+                <h5>Пинг <span class="badge bg-info rounded-pill">{{ site_status.ping|floatformat:2 }} мс</span></h5>
+                {% endif %}
+                {% if site.avg_ping %}
+                <h5 class="mb-2">Средний пинг <span class="badge bg-info rounded-pill">{{ site.avg_ping|floatformat:2 }} мс</span></h5>
+                {% endif %}
+                
+                {% endif %}
+
+                <div class="d-flex flex-column">
                     <a class="btn btn-primary btn-sm" type="button" href="{{ site.get_absolute_url }}">Подробнее</a>
                 </div>
                 {% block extrabuttons %}

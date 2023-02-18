@@ -1,0 +1,79 @@
+{% load static %}
+{% load common %}
+
+<div class="row align-items-start">
+    <div class="text-center col-lg-3 col-sm-12">
+        <a class="text-decoration-none" href="{{ site.url }}">
+            <img class="img-thumbnail border-0 w-75 h-75"
+            src={% if site.logo %}"{{ site.logo.url }}"{% else %}"{% static 'catalog/img/default.png' %}"{% endif %} 
+            alt="картинка">
+        </a>
+    </div>
+    <div class="col-lg-9 col-sm-12 ps-lg-5">
+        <div class="row w-100 my-2 mx-auto">
+            <div class='col-md-auto col-12 d-flex align-items-center mx-auto lh-1'>
+              <a class="text-decoration-none text-dark fs-1 text-break mx-auto text-center" href="{{ site.url }}">{{ site.name|truncatechars:40 }}</a>
+            </div>
+
+            {% if site.is_on_catalog %}
+            <div class="col-md-auto col-12 d-flex align-items-center flex-column mt-2 mt-md-0">
+                <div class="row">
+                    <div class="col d-flex align-self-center">
+                        <a href="{% url 'reports:create' site.pk %}">
+                            <img class="mx-1" src="{% static 'catalog/img/report.png' %}" alt="" width="40" height="40">
+                        </a>
+                    </div>
+    
+                    <div class="col-auto">
+                        {% if site.rating_num > 0 %}
+                        <div class="d-flex align-items-center justify-content-center lh-1">
+                            <span class="text-muted fs-4">{{ site.rating_avg|floatformat:2 }}</span>
+                            <img class="mx-1" src="{% static 'catalog/img/star.png' %}" alt="" width="15" height="15">
+                            <span class="text-muted fs-6 ms-2">{{ site.rating_num }}</span>
+                        </div>
+                        {% else %}
+                        <div>
+                            <span class="text-muted fs-6">Нет оценок</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if user_rating %}
+                        <div class="d-flex align-items-center lh-1">
+                            <span class="text-muted">Ваша оценка: {{ user_rating }}</span>
+                            <img class="mx-1" src="{% static 'catalog/img/star.png' %}" alt="" width="15" height="15">
+                        </div>
+                        <a class="btn btn-sm btn-outline-success mt-1" href="{% url 'rating:update' site.pk %}">Изменить оценку</a>
+                        {% else %}
+                        <a class="btn btn-sm btn-outline-success mt-1" href="{% url 'rating:create' site.pk %}">Оценить</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <hr>
+        {% get_site_status site as site_status %}
+        {% if site_status %}
+
+        {% comment %} Статус код {% endcomment %}
+        {% if site_status.status_code < 400 %}
+        <h4>Статус <span class="badge bg-success rounded-pill">Работает. Код {{ site_status.status_code }}</span></h4>
+        {% else %}
+        <h4>Статус <span class="badge bg-danger rounded-pill">Не работает. Код {{ site_status.status_code }}</span></h4>
+        {% endif %}
+
+        {% comment %} Пинг {% endcomment %}
+        {% if site_status.ping %}
+        <h5>Пинг <span class="badge bg-info rounded-pill">{{ site_status.ping|floatformat:2 }} мс</span></h5>
+        {% endif %}
+        {% if site.avg_ping %}
+        <h5 class="mb-2">Средний пинг <span class="badge bg-info rounded-pill">{{ site.avg_ping|floatformat:2 }} мс</span></h5>
+        {% endif %}
+
+        {% endif %}
+
+        <h4>Описание</h4>
+        <p class="text-muted fs-6">{{ site.description }}</p>
+    </div>
+</div>

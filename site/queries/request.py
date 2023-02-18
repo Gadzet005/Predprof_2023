@@ -19,7 +19,7 @@ class SiteQueryManager(object):
             try:
                 site.status_code = responses[idx].status_code
             except AttributeError:
-                site.status_code = None
+                site.status_code = 404
 
     def _get_ping(self):
         for site in self.sites:
@@ -38,10 +38,9 @@ class SiteQueryManager(object):
 
     def save(self):
         for site in self.sites:
-            if site.ping and site.status_code:
-                SiteQueryNote.objects.create(
-                    site=site, status_code=site.status_code, ping=site.ping
-                    )
+            SiteQueryNote.objects.create(
+                site=site, status_code=site.status_code, ping=site.ping
+                )
 
     @staticmethod
     def get_ping(domen):

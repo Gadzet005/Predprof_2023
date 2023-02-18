@@ -1,0 +1,11 @@
+{% load static %}
+{% load common %}
+
+<div style="display: none" id="jsonData" data-json="{% site_query_notes_to_json site %}"></div>
+
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+  
+<script src="{% static 'chart.js/dist/chart.umd.js' %}"></script>
+<script src="{% static 'catalog/js/ping_chart.js' %}"></script>
