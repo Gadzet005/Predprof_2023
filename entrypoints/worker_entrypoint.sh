@@ -4,4 +4,3 @@ while ! nc -z db 3306 ; do
 done
 
 celery -A config worker -l info
-

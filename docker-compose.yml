@@ -21,7 +21,7 @@ services:
       - .env
     build:
       context: .
-    expose: 
+    expose:
       - 8000
     command: sh /entrypoint.sh
     depends_on:
@@ -61,7 +61,16 @@ services:
       - db
       - redis
       - nginx
-
+    
+  telegram:
+    volumes:
+      - static:/static
+    env_file:
+      - .env
+    build:
+      context: .
+    command: sh /telegram_entrypoint.sh
+  
   nginx:
     build: ./nginx
     volumes:

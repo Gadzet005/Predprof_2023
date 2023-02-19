@@ -12,3 +12,4 @@ WORKDIR /app
 COPY ./entrypoints/entrypoint.sh /
 COPY ./entrypoints/worker_entrypoint.sh /
 COPY ./entrypoints/beat_entrypoint.sh /
+COPY ./entrypoints/telegram_entrypoint.sh /
