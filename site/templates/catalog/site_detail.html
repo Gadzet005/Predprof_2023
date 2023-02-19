@@ -25,17 +25,16 @@
         {% endif %}
     </ul>
 </div>
-
 <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-info" role="tabpanel" aria-labelledby="pills-info-tab">
-        {% include 'catalog/site_detail_components/info_page.html' %}
+        {% include 'catalog/detail_pages/info_page.html' %}
     </div>
     <div class="tab-pane fade" id="pills-stats" role="tabpanel" aria-labelledby="pills-stats-tab">
-        2
+        {% include 'catalog/detail_pages/statistic_page.html' %}
     </div>
     {% if site.is_on_catalog %}
     <div class="tab-pane fade" id="pills-reviews" role="tabpanel" aria-labelledby="pills-reviews-tab">
-        {% include 'catalog/site_detail_components/feedback_page.html' %}
+        {% include 'catalog/detail_pages/feedback_page.html' %}
     </div>
     {% endif %}
 </div>

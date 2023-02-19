@@ -19,23 +19,23 @@
         {% endblock page_title %}
     </title>
 
-    <!-- Bootstrap CSS -->
+    {% comment %} Bootstrap CSS {% endcomment %}
     <link rel="stylesheet" href="{% static 'bootstrap-5/css/bootstrap.min.css' %}">
 
-    <!-- Bootstrap JS -->
+    {% comment %} Bootstrap JS {% endcomment %}
     <script src="{% static 'bootstrap-5/js/bootstrap.bundle.min.js' %}"></script>
 
     {% block extrahead %}{% endblock extrahead %}
 </head>
 
-<body style="background-color: #eee;">
+<body style="background-color: #eee; font-family: 'Source Sans Pro', 'Lucida Grande', sans-serif;">
 
 <!-- Главное меню -->
 {% block main_menu %}
 {% get_main_menu request %}
 {% endblock main_menu %}
 
-<!-- Сообщения пользователю -->
+{% comment %} Сообщения пользователю {% endcomment %}
 {% if messages %}
 <div class="container">
     {% for message in messages %}
@@ -48,7 +48,7 @@
 </div>
 {% endif %}
 
-<main class="container min-vh-100" style="font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;">
+<main class="container min-vh-100">
     {% block content %}
     Пусто...
     {% endblock content %}
