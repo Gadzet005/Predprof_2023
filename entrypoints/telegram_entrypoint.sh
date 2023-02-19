@@ -3,4 +3,4 @@ while ! nc -z db 3306 ; do
     sleep 5
 done
 
-celery -A config beat -l info
+python3 manage.py telegram_bot
