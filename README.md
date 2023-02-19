@@ -16,11 +16,12 @@
   ```
   python -m venv venv
   ```
-- Зайдите в него, **для Windows**
+- Зайдите в venv
+-- Windows
   ```
-  venv\Scripts\activate
+  venv/Scripts/activate
   ```
-- Для **Linux/Mac**
+-- Linux/Mac
   ```
   source venv/bin/activate
   ```
@@ -37,4 +38,4 @@
   python site/manage.py runserver
   ```
 ## Настройка
-- Вы можете создать файл .env в папке config и определить переменные окружения. Пример такого файла - .env-example (в той же папке)
+- Настроить проект можно с помощью .env файла в корне проекта (см. .env-example)
