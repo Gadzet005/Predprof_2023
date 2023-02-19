@@ -33,4 +33,3 @@ def state_change_send_telegram_notification(site_name, cur_code, recipients_list
             chat_id = User.objects.get(email=recipient).chat_id
             if chat_id != 0:
                 _ = get(f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage?chat_id={chat_id}&text={message}')
-

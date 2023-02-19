@@ -9,8 +9,6 @@ from telegram.ext import (
     filters,
 )
 
-import os
-
 from users.models import User
 from config.settings import TELEGRAM_TOKEN as TOKEN
 
