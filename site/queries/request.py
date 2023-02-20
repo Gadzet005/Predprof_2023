@@ -36,10 +36,9 @@ class SiteQueryManager(object):
 
     def save(self):
         for site in self.sites:
-            if site.ping:
-                SiteQueryNote.objects.create(
-                    site=site, status_code=site.status_code, ping=site.ping
-                    )
+            SiteQueryNote.objects.create(
+                site=site, status_code=site.status_code, ping=site.ping
+                )
 
     @staticmethod
     def get_ping(domen):

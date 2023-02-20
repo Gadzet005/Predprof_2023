@@ -1,0 +1,25 @@
+{% load static %}
+
+<div class="container">
+{% if feedbacks %}
+<h4 class="text-center mb-5 mb-lg-0">Отзывов оставлено: {{ feedbacks.count }}</h4>
+{% endif %}
+
+{% for feedback in feedbacks %}
+<div class="my-2">
+    <div class="d-flex flex-row">
+        <div class="d-flex align-items-center">
+            <span class="fs-3 me-3 text-break">{{ feedback.user }}</span>
+            <span class="text-muted fs-4">{{ feedback.rating }}</span>
+            <img class="mx-1" src="{% static 'catalog/img/star.png' %}" alt="" width="20" height="20">
+        </div>
+        <span class="d-flex align-items-center ms-auto">{{ feedback.creation_date }}</span>
+    </div>
+    <span class="text-muted fs-6 text-break">{{ feedback.feedback }}</span>
+</div>
+{% empty %}
+<div class="text-center">
+    <span class="text-muted fs-5">Пока никто не оставил отзыв. Ты можешь быть первым!</span>
+</div>
+{% endfor %}
+</div>

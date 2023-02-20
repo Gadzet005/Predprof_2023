@@ -1,8 +1,5 @@
 import re
 from queries.request import SiteQueryManager
-from time import sleep
-from datetime import datetime
-
 from catalog.models import Site
 from queries.models import SiteFallReason
 
