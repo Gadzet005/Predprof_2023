@@ -13,7 +13,7 @@ class SiteQueryNote(models.Model):
         ordering = ('-note_time',)
 
 class SiteFallReason(models.Model):
-    site=models.ForeignKey(Site, verbose_name='сайт', on_delete=models.CASCADE)
+    site=models.ForeignKey('catalog.Site', verbose_name='сайт', on_delete=models.CASCADE)
     reason=models.TextField(max_length=100, verbose_name='причина падения')
     time=models.DateTimeField(verbose_name='время записи', auto_now_add=True)
 
