@@ -8,11 +8,15 @@ from queries.models import SiteFallReason
 
 def down(site):
     sites=SiteFallReason.objects.all()
+    if len(sites) == 0:
+        st="this site fall "+ site.url
+        SiteFallReason.objects.create(site=site, reason="ping > 5 seconds")
+        return st
     for FallSite in sites:
         if site.url == FallSite.site.url:
             return None
         st="this site fall "+ site.url
-        SiteFallReason.objects.creat(site, "ping > 5 seconds")
+        SiteFallReason.objects.create(site=site, reason="ping > 5 seconds")
         return st
 def up(site):
     sites=SiteFallReason.objects.all()
@@ -35,7 +39,7 @@ def demon():
         print(site.name, site.url, site.status_code, site.ping, sep='\t')
     manager.save()
     for site in sites:
-        if site.ping==None:
+        if site.ping==2000:
             print(down(site))
         else:
             up(site)

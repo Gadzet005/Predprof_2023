@@ -45,8 +45,8 @@ class SiteQueryManager(object):
     def get_ping(domen):
         try:
             r = ping(socket.gethostbyname(domen), timeout=5)
-            if r.rtt_avg_ms >= 5000:
-                return None
+            if r.rtt_avg_ms >= 2000:
+                return 2000
             return r.rtt_avg_ms
         except:
             return None
