@@ -1,10 +1,10 @@
 import socket
 import re
-
 import grequests
 from pythonping import ping
-
 from queries.models import SiteQueryNote
+
+
 class SiteQueryManager(object):
     def __init__(self, sites):
         self.sites = sites
@@ -38,7 +38,7 @@ class SiteQueryManager(object):
         for site in self.sites:
             SiteQueryNote.objects.create(
                 site=site, status_code=site.status_code, ping=site.ping
-                )
+            )
 
     @staticmethod
     def get_ping(domen):
@@ -47,5 +47,5 @@ class SiteQueryManager(object):
             if r.rtt_avg_ms >= 2000:
                 return 2000
             return r.rtt_avg_ms
-        except:
+        except BaseException:
             return None

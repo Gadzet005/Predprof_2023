@@ -9,17 +9,24 @@ from common.utils import notify_users
 def down(site):
     sites = SiteFallReason.objects.all()
     if len(sites) == 0:
-        reason = f'Наш сервер обнаружил, что сайт {site.url}'
+        reason = f'по причине статус кода: {site.status_code}'
+
+        if site.ping == 2000:
+            reason = 'по причине высокой задержки: больше 2000ms'
+
         SiteFallReason.objects.create(site=site, reason=reason)
-        notify_users(site.url, site.status_code, reason)
+        notify_users(site.url, site.status_code, reason, False)
         return 'fall'
+
     for FallSite in sites:
         if site.url == FallSite.site.url:
             return None
-        reason = f'Наш сервер обнаружил, что сайт {site.url}'
-        SiteFallReason.objects.create(site=site, reason=reason)
-        notify_users(site.url, site.status_code, reason)
-        return 'fall'
+    reason = f'по причине статус кода: {site.status_code}'
+    if site.ping == 2000:
+        reason = 'по причине высокой задержки: больше 2000ms'
+    SiteFallReason.objects.create(site=site, reason=reason)
+    notify_users(site.url, site.status_code, reason, False)
+    return 'fall'
 
 
 def up(site):
@@ -27,8 +34,8 @@ def up(site):
     for FallSite in sites:
         if site.url == FallSite.site.url:
             FallSite.delete()
-            reason = f'Наш сервер обнаружил, что сайт {site.site.url}'
-            notify_users(site.site.url, site.status_code, reason)
+            reason = f'Наш сервер обнаружил, что сайт {site.url} доступен'
+            notify_users(site.url, site.status_code, reason, True)
 
 
 def demon():
@@ -42,8 +49,9 @@ def demon():
         print(site.name, site.url, site.status_code, site.ping, sep='\t')
     manager.save()
     print(SiteFallReason.objects.all())
+
     for site in sites:
-        if site.ping == 2000:
+        if site.ping == 2000 or site.status_code > 400:
             print(down(site))
         else:
             up(site)
