@@ -5,8 +5,6 @@ import grequests
 from pythonping import ping
 
 from queries.models import SiteQueryNote
-
-
 class SiteQueryManager(object):
     def __init__(self, sites):
         self.sites = sites
@@ -46,8 +44,8 @@ class SiteQueryManager(object):
     @staticmethod
     def get_ping(domen):
         try:
-            r = ping(socket.gethostbyname(domen))
-            if r.rtt_avg_ms >= 2000:
+            r = ping(socket.gethostbyname(domen), timeout=5)
+            if r.rtt_avg_ms >= 5000:
                 return None
             return r.rtt_avg_ms
         except:
