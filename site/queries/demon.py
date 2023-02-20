@@ -16,11 +16,10 @@ def down(site):
         return st
 def up(site):
     sites=SiteFallReason.objects.all()
-    if site.ping != None:
-        for FallSite in sites:
-            if site.url == FallSite.site.url:
-                FallSite.delete()
-                print("delete")
+    for FallSite in sites:
+        if site.url == FallSite.site.url:
+            FallSite.delete()
+            print("delete")
                 
 
 
@@ -38,6 +37,7 @@ def demon():
     for site in sites:
         if site.ping==None:
             print(down(site))
+        else:
             up(site)
 
     finish_time = datetime.now()
