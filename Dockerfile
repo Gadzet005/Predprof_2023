@@ -4,6 +4,8 @@ RUN apk update && apk add python3 python3-dev mariadb-dev build-base netcat-open
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
+COPY ./requirements-prod.txt .
+RUN pip install -r requirements-prod.txt
 RUN apk del python3-dev mariadb-dev build-base
 COPY ./site /app
 WORKDIR /app
