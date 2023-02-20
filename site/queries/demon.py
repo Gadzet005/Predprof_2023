@@ -2,6 +2,7 @@ import re
 from queries.request import SiteQueryManager
 from catalog.models import Site
 from queries.models import SiteFallReason
+from datetime import datetime
 
 def down(site):
     sites=SiteFallReason.objects.all()
