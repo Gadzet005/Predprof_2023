@@ -2,26 +2,22 @@ from django.core.mail import send_mass_mail
 from requests import get
 from users.models import User
 from config.settings import EMAIL_HOST_USER, TELEGRAM_TOKEN, EMAIL_HOST_PASSWORD
-import smtplib
+from send_mail import send_mail
 
 
 def state_change_send_email(site_name, cur_code, recipients_list, text, state):
     theme = f'Сайт {site_name} изменил свое состояние'
 
-    server = smtplib.SMTP_SSL('smtp.mail.ru:465')
-    server.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
-
     if state:
         text = f'Ресурс {site_name} сейчас доступен'
         for recipient in recipients_list:
             message = f'Subject: {theme}\n\n{text}'
-            server.sendmail(EMAIL_HOST_USER, recipient, message)
+            send_mail(message)
     else:
         text = f'Ресурс {site_name} сейчас не доступен' + '\n' + text
         for recipient in recipients_list:
             message = f'Subject: {theme}\n\n{text}'
-            server.sendmail(EMAIL_HOST_USER, recipient, message)
-    server.quit()
+            send_mail(message)
 
 
 def state_change_send_telegram_notification(site_name, cur_code, recipients_list, text, state):
